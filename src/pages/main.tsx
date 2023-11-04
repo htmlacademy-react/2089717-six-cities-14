@@ -1,31 +1,45 @@
 /* eslint-disable react/no-array-index-key */
 
 import CitiesCard from '../components/cities-card';
+import { Helmet } from 'react-helmet-async';
 
 type MainPageProps = {
-  CountRentOffers: number;
-}
+  countRentOffers: number;
+};
 
-function MainPage({CountRentOffers}:MainPageProps) {
-  const citiesCards: JSX.Element[] = Array.from({length:CountRentOffers});
+function MainPage({ countRentOffers }: MainPageProps) {
+  const citiesCards = Array.from({ length: countRentOffers });
 
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>{'6 cities'}</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
               <a className="header__logo-link header__logo-link--active">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
+                <img
+                  className="header__logo"
+                  src="img/logo.svg"
+                  alt="6 cities logo"
+                  width="81"
+                  height="41"
+                />
               </a>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                  <a
+                    className="header__nav-link header__nav-link--profile"
+                    href="#"
+                  >
+                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                    <span className="header__user-name user__name">
+                      Oliver.conner@gmail.com
+                    </span>
                     <span className="header__favorite-count">3</span>
                   </a>
                 </li>
@@ -86,20 +100,31 @@ function MainPage({CountRentOffers}:MainPageProps) {
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
-              Popular
+                  Popular
                   <svg className="places__sorting-arrow" width="7" height="4">
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
                 <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
+                  <li
+                    className="places__option places__option--active"
+                    tabIndex={0}
+                  >
+                    Popular
+                  </li>
+                  <li className="places__option" tabIndex={0}>
+                    Price: low to high
+                  </li>
+                  <li className="places__option" tabIndex={0}>
+                    Price: high to low
+                  </li>
+                  <li className="places__option" tabIndex={0}>
+                    Top rated first
+                  </li>
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {citiesCards.map((_, index:number)=><CitiesCard key={index}/>)}
+                {citiesCards.map((_, index: number) => (<CitiesCard key={index} />))}
               </div>
             </section>
             <div className="cities__right-section">
@@ -108,7 +133,8 @@ function MainPage({CountRentOffers}:MainPageProps) {
           </div>
         </div>
       </main>
-    </div>);
+    </div>
+  );
 }
 
 export default MainPage;

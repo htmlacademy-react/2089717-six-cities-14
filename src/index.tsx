@@ -10,6 +10,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App CountRentOffers = {COUNT_RENT_OFFERS}/>
+    <App countRentOffers = {COUNT_RENT_OFFERS}/>
   </React.StrictMode>
 );
