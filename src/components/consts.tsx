@@ -1,8 +1,8 @@
-const AppRoute = {
-  Main: '/',
-  Login: '/login',
-  Favorites: '/favorites',
-  Offer: '/offer',
-} as const;
+enum AppRoute {
+  Main = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer/',
+}
 
 export { AppRoute };
