@@ -1,9 +1,12 @@
 export type Location = {
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
   zoom: number;
 }
-
+export type Site = {
+  lat: number;
+  lng: number;
+};
 export type City = {
   location: Location;
   name: string;
@@ -29,6 +32,7 @@ export type OfferType = {
   maxGuest: number;
   costPerNight: number;
   city: City;
+  site: Site;
   host: Host;
   reviews: number;
   id: number;

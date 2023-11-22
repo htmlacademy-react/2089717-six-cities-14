@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import MainPage from '../pages/main';
 import Login from '../pages/login';
 import Offer from '../pages/offer';
@@ -9,21 +8,33 @@ import { AppRoute } from './consts';
 import { HelmetProvider } from 'react-helmet-async';
 import { OfferType } from '../types';
 import PrivateRoute from '../components/privite-route';
+import { useState } from 'react';
 
 type AppProps = {
   mockData: OfferType[];
 };
 
 function App({ mockData }: AppProps) {
+  const [selectedCardId, setSelectedCardId] = useState(0);
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Main} element={<MainPage />} />
+          <Route
+            path={AppRoute.Main}
+            element={
+              <MainPage
+                setSelectedCardId={setSelectedCardId}
+                selectedCardId={selectedCardId}
+              />
+            }
+          />
           <Route path={AppRoute.Login} element={<Login />} />
           <Route
             path={`${AppRoute.Offer}:id`}
-            element={<Offer offer={mockData} />}
+            element={
+              <Offer offers={mockData} setSelectedCardId={setSelectedCardId} />
+            }
           />
           <Route
             path={AppRoute.Favorites}

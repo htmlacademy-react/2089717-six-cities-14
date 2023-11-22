@@ -8,14 +8,15 @@ import ErrorPage from '../components/error-page';
 import ReviewsForm from '../components/reviews_form';
 
 type OfferProps = {
-  offer: OfferType[];
+  offers: OfferType[];
+  setSelectedCardId: React.Dispatch<React.SetStateAction<number>>;
 };
 
-function Offer(props: OfferProps) {
+function Offer({ offers, setSelectedCardId }: OfferProps) {
   const params = useParams();
   const current = params.id;
 
-  const data = props.offer.find(
+  const data = offers.find(
     (offerItem: OfferType) => offerItem.id === Number(current)
   );
 
@@ -212,7 +213,10 @@ function Offer(props: OfferProps) {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              <CardList mockData={generatedOffers} />
+              <CardList
+                mockData={generatedOffers}
+                setSelectedCardId={setSelectedCardId}
+              />
             </div>
           </section>
         </div>

@@ -33,8 +33,12 @@ function generateMultipleOffers(count: number): OfferType[] {
   const maxGuestValues = [5, 10, 3, 4];
   const costPerNightValues = [100, 150, 80, 120];
   const cities = ['Amsterdam', 'Amsterdam', 'Amsterdam', 'Amsterdam'];
-  const cityCoordinates = [
-    { latitude: 52.3676, longitude: 4.9041, zoom: 11 }
+  const cityCoordinates = [{ lat: 52.37403, lng: 4.88969, zoom: 12 }];
+  const offerCoordinates = [
+    { lat: 52.3909553943508, lng: 4.85309666406198 },
+    { lat: 52.3609553943508, lng: 4.85309666406198 },
+    { lat: 52.3909553943508, lng: 4.929309666406198 },
+    { lat: 52.3809553943508, lng: 4.939309666406198 },
   ];
   const hostAvatarImages = [
     '../img/avatar-angelina.jpg',
@@ -59,9 +63,10 @@ function generateMultipleOffers(count: number): OfferType[] {
     maxGuest: maxGuestValues[i],
     costPerNight: costPerNightValues[i],
     city: {
-      location: cityCoordinates[i],
+      location: cityCoordinates[0],
       name: cities[i],
     },
+    site: offerCoordinates[i],
     host: {
       avatarImage: hostAvatarImages[i],
       hostName: hostNames[i],

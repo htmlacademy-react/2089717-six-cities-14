@@ -5,8 +5,13 @@ import { Helmet } from 'react-helmet-async';
 import CardList from '../components/card-list';
 import MainHeader from '../components/main-header';
 import { Fragment } from 'react';
+import Map from '../components/map';
+type MainPageProps = {
+  setSelectedCardId: React.Dispatch<React.SetStateAction<number>>;
+  selectedCardId: number;
+};
 
-function MainPage() {
+function MainPage({ setSelectedCardId, selectedCardId }: MainPageProps) {
   const CITIES = [
     'Paris',
     'Cologne',
@@ -15,20 +20,20 @@ function MainPage() {
     'Hamburg',
     'Dusseldorf',
   ];
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
         <title>{'6 cities'}</title>
       </Helmet>
       <MainHeader />
-
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {CITIES.map((city, index) => (
-                <Fragment key={index}>
+              {CITIES.map((city) => (
+                <Fragment key={city}>
                   <li className="locations__item">
                     <a
                       className={`locations__item-link tabs__item${
@@ -41,32 +46,6 @@ function MainPage() {
                   </li>
                 </Fragment>
               ))}
-
-              {/* <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li> */}
             </ul>
           </section>
         </div>
@@ -101,10 +80,13 @@ function MainPage() {
                   </li>
                 </ul>
               </form>
-              <CardList mockData={generatedOffers} />
+              <CardList
+                setSelectedCardId={setSelectedCardId}
+                mockData={generatedOffers}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map offers={generatedOffers} selectedCardId={selectedCardId} />
             </div>
           </div>
         </div>
