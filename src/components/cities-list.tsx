@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../store';
-import { activeCityAction } from '../store/action';
+import { activeCityAction, sortOffersAction } from '../store/action';
+import { initialState } from '../store/reduser';
 
 const CITIES = [
   'Paris',
@@ -26,7 +27,12 @@ function CitiesList() {
               city,
               currentCity
             )}`}
-            onClick={() => dispatch(activeCityAction(city))}
+            onClick={() => {
+              dispatch(activeCityAction(city));
+              if (city !== currentCity) {
+                dispatch(sortOffersAction(initialState.sortedOffers));
+              }
+            }}
           >
             <span>{city}</span>
           </button>
