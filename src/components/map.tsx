@@ -28,7 +28,7 @@ function Map({ selectedCardId }: MapProps) {
   const currentOffer = offersCurrentCity.find(
     (offer) => offer.city.name === `${currentCity}`
   );
-  const activetCityLocation = currentOffer?.city || {
+  const activeCityLocation = currentOffer?.city || {
     location: {
       lat: 48.864716,
       lng: 2.349014,
@@ -37,12 +37,12 @@ function Map({ selectedCardId }: MapProps) {
     name: 'Paris',
   };
 
-  const { map, mapRef } = useMap(activetCityLocation);
+  const { map, mapRef } = useMap(activeCityLocation);
 
   useEffect(() => {
     if (map) {
       map.setView(
-        [activetCityLocation.location.lat, activetCityLocation.location.lng],
+        [activeCityLocation.location.lat, activeCityLocation.location.lng],
         12
       );
       offersCurrentCity.forEach((offer) => {
@@ -64,7 +64,7 @@ function Map({ selectedCardId }: MapProps) {
     }
   }, [
     map,
-    activetCityLocation,
+    activeCityLocation,
     offersCurrentCity,
     selectedCardId,
     defaultCustomIcon,

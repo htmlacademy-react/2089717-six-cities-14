@@ -7,13 +7,13 @@ type UseMapResult = {
   mapRef: React.RefObject<HTMLElement>;
 };
 
-function useMap(city: City):UseMapResult {
+function useMap(city: City): UseMapResult {
   const [map, setMap] = useState<L.Map | null>(null);
-  const isRenderedRef = useRef<boolean>(false);
+  const [isMapRendered, setIsRendered] = useState<boolean>(false);
   const mapRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (mapRef.current !== null && !isRenderedRef.current) {
+    if (mapRef.current !== null && !isMapRendered) {
       const instance = leaflet.map(mapRef.current, {
         center: {
           lat: city.location.lat,
@@ -32,7 +32,7 @@ function useMap(city: City):UseMapResult {
         )
         .addTo(instance);
       setMap(instance);
-      isRenderedRef.current = true;
+      setIsRendered((isRendered) => !isRendered);
     }
   }, [city]);
 
