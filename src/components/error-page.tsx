@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
-function ErrorPage () {
-  return(
+function ErrorPage() {
+  return (
     <div>
       <Helmet>
         <title>6 cities - Error</title>

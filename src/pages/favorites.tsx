@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import { Helmet } from 'react-helmet-async';
-import { generatedOffers } from '../components/mocks/offers';
+import { generatedOffers } from '../mocks/offers';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../components/consts';
 import CityFavouriteItem from '../components/city-favourite-ltem';

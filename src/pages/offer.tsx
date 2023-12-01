@@ -1,23 +1,22 @@
 import { Helmet } from 'react-helmet-async';
 import MainHeader from '../components/main-header';
-import { OfferType } from '../types';
-import { generatedOffers } from '../components/mocks/offers';
+import { OfferModel } from '../types';
 import CardList from '../components/card-list';
 import { useParams } from 'react-router-dom';
 import ErrorPage from '../components/error-page';
 import ReviewsForm from '../components/reviews_form';
+import { useAppSelector } from '../store';
 
 type OfferProps = {
-  offers: OfferType[];
   setSelectedCardId: React.Dispatch<React.SetStateAction<number>>;
 };
 
-function Offer({ offers, setSelectedCardId }: OfferProps) {
+function Offer({ setSelectedCardId }: OfferProps) {
+  const offers = useAppSelector((state) => state.offers);
   const params = useParams();
   const current = params.id;
-
   const data = offers.find(
-    (offerItem: OfferType) => offerItem.id === Number(current)
+    (offerItem: OfferModel) => offerItem.id === Number(current)
   );
 
   if (!data) {
@@ -213,10 +212,7 @@ function Offer({ offers, setSelectedCardId }: OfferProps) {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              <CardList
-                mockData={generatedOffers}
-                setSelectedCardId={setSelectedCardId}
-              />
+              <CardList setSelectedCardId={setSelectedCardId} />
             </div>
           </section>
         </div>

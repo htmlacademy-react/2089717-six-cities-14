@@ -19,7 +19,7 @@ export type Host = {
   id: number;
 }
 
-export type OfferType = {
+export type OfferModel = {
   image: string;
   smalllImage: string;
   header: string;
@@ -37,4 +37,5 @@ export type OfferType = {
   reviews: number;
   id: number;
 };
+
 

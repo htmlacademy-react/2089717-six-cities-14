@@ -1,10 +1,10 @@
-import { OfferType } from '../types';
+import { OfferModel } from '../types';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../components/consts';
 import { useParams } from 'react-router-dom';
 
 type CitiesCardProps = {
-  cardData: OfferType;
+  cardData: OfferModel;
   onSelectCard: (id: number) => void;
 };
 

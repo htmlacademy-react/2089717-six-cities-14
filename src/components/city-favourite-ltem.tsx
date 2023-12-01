@@ -1,9 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 import FavouriteCard from '../components/favourite-card';
-import { OfferType } from '../types';
+import { OfferModel } from '../types';
 
 type CityFavouriteItemProps = {
-  mockData: OfferType[];
+  mockData: OfferModel[];
   cityToDisplay: string;
   isFavourite: boolean;
 };
@@ -11,9 +11,9 @@ type CityFavouriteItemProps = {
 function CityFavouriteItem(props: CityFavouriteItemProps) {
   const { mockData, cityToDisplay, isFavourite } = props;
   const filteredCards = mockData.filter(
-    (data) =>
-      data.city.name === cityToDisplay
+    (data) => data.city.name === cityToDisplay
   );
+
   return (
     isFavourite && (
       <li className="favorites__locations-items">

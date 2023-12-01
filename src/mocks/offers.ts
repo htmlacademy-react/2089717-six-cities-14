@@ -1,6 +1,6 @@
-import { OfferType } from '../../types';
+import { OfferModel } from '../types';
 
-function generateMultipleOffers(count: number): OfferType[] {
+function generateMultipleOffers(count: number): OfferModel[] {
   const images = [
     '../img/apartment-01.jpg',
     '../img/apartment-02.jpg',
@@ -32,12 +32,17 @@ function generateMultipleOffers(count: number): OfferType[] {
   const bedroomQuantities = [3, 5, 2, 1];
   const maxGuestValues = [5, 10, 3, 4];
   const costPerNightValues = [100, 150, 80, 120];
-  const cities = ['Amsterdam', 'Amsterdam', 'Amsterdam', 'Amsterdam'];
-  const cityCoordinates = [{ lat: 52.37403, lng: 4.88969, zoom: 12 }];
+  const cities = ['Amsterdam', 'Hamburg', 'Hamburg', 'Amsterdam'];
+  const cityCoordinates = [
+    { lat: 52.37403, lng: 4.88969, zoom: 12 },
+    { lat: 53.55315, lng: 9.9951, zoom: 12 },
+    { lat: 57.37403, lng: 4.88969, zoom: 12 },
+    { lat: 59.37403, lng: 4.88969, zoom: 12 },
+  ];
   const offerCoordinates = [
     { lat: 52.3909553943508, lng: 4.85309666406198 },
-    { lat: 52.3609553943508, lng: 4.85309666406198 },
-    { lat: 52.3909553943508, lng: 4.929309666406198 },
+    { lat: 53.572765618094614, lng: 9.94930740108192 },
+    { lat: 53.5424999800414, lng: 10.00606258549943 },
     { lat: 52.3809553943508, lng: 4.939309666406198 },
   ];
   const hostAvatarImages = [
@@ -63,7 +68,7 @@ function generateMultipleOffers(count: number): OfferType[] {
     maxGuest: maxGuestValues[i],
     costPerNight: costPerNightValues[i],
     city: {
-      location: cityCoordinates[0],
+      location: cityCoordinates[i],
       name: cities[i],
     },
     site: offerCoordinates[i],

@@ -6,22 +6,18 @@ import ErrorPage from './error-page';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from './consts';
 import { HelmetProvider } from 'react-helmet-async';
-import { OfferType } from '../types';
 import PrivateRoute from '../components/privite-route';
 import { useState } from 'react';
 
-type AppProps = {
-  mockData: OfferType[];
-};
-
-function App({ mockData }: AppProps) {
+function App() {
   const [selectedCardId, setSelectedCardId] = useState(0);
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
-            path={AppRoute.Main}
+            path={`${AppRoute.Main}`}
             element={
               <MainPage
                 setSelectedCardId={setSelectedCardId}
@@ -33,7 +29,7 @@ function App({ mockData }: AppProps) {
           <Route
             path={`${AppRoute.Offer}:id`}
             element={
-              <Offer offers={mockData} setSelectedCardId={setSelectedCardId} />
+              <Offer setSelectedCardId={setSelectedCardId} />
             }
           />
           <Route

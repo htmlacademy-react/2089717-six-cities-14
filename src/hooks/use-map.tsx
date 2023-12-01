@@ -2,12 +2,15 @@ import { useEffect, useState, useRef } from 'react';
 import leaflet from 'leaflet';
 import { City } from '../types';
 
-function useMap(
-  mapRef: React.MutableRefObject<HTMLElement | null>,
-  city: City
-): L.Map | null {
+type UseMapResult = {
+  map: L.Map | null;
+  mapRef: React.RefObject<HTMLElement>;
+};
+
+function useMap(city: City):UseMapResult {
   const [map, setMap] = useState<L.Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
+  const mapRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
@@ -31,9 +34,9 @@ function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, city]);
+  }, [city]);
 
-  return map;
+  return { map, mapRef };
 }
 
 export default useMap;
