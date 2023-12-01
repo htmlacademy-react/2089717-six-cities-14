@@ -1,39 +1,45 @@
 import { Helmet } from 'react-helmet-async';
 import MainHeader from '../components/main-header';
-import { OfferModel } from '../types';
 import CardList from '../components/card-list';
 import { useParams } from 'react-router-dom';
 import ErrorPage from '../components/error-page';
 import ReviewsForm from '../components/reviews_form';
-import { useAppSelector } from '../store';
+import { useAppDispatch, useAppSelector } from '../store';
+import { useEffect } from 'react';
+import { fetchOfferDetailedAction } from '../store/api-actions';
 
 type OfferProps = {
-  setSelectedCardId: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedCardId: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function Offer({ setSelectedCardId }: OfferProps) {
-  const offers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
+
   const params = useParams();
   const current = params.id;
-  const data = offers.find(
-    (offerItem: OfferModel) => offerItem.id === Number(current)
-  );
-
-  if (!data) {
+  useEffect(() => {
+    if (current) {
+      dispatch(fetchOfferDetailedAction(current));
+    }
+  }, []);
+  const offer = useAppSelector((state) => state.offer);
+  if (!offer) {
     return <ErrorPage />;
   }
   const {
-    header,
+    title,
     description,
     isPrime,
-    housingType,
+    type,
     rating,
-    bedroomQuantity,
-    maxGuest,
-    costPerNight,
+    bedrooms,
+    maxAdults,
+    price,
+    images,
     host,
+    goods,
     reviews,
-  } = data;
+  } = offer;
 
   return (
     <div className="page">
@@ -46,48 +52,15 @@ function Offer({ setSelectedCardId }: OfferProps) {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/room.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-02.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-03.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/studio-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
+              {images.map((image) => (
+                <div className="offer__image-wrapper" key={image}>
+                  <img
+                    className="offer__image"
+                    src={image}
+                    alt="Photo studio"
+                  />
+                </div>
+              ))}
             </div>
           </div>
           <div className="offer__container container">
@@ -98,7 +71,7 @@ function Offer({ setSelectedCardId }: OfferProps) {
                 </div>
               )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">{header}</h1>
+                <h1 className="offer__name">{title}</h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use href="#icon-bookmark" />
@@ -117,32 +90,27 @@ function Offer({ setSelectedCardId }: OfferProps) {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {housingType}
+                  {type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {`${bedroomQuantity} Bedrooms`}
+                  {`${bedrooms} Bedrooms`}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  {`Max ${maxGuest} adults`}
+                  {`Max ${maxAdults} adults`}
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">{`€${costPerNight}`}</b>
+                <b className="offer__price-value">{`€${price}`}</b>
                 <span className="offer__price-text">night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What`&aposs inside</h2>
                 <ul className="offer__inside-list">
-                  <li className="offer__inside-item">Wi-Fi</li>
-                  <li className="offer__inside-item">Washing machine</li>
-                  <li className="offer__inside-item">Towels</li>
-                  <li className="offer__inside-item">Heating</li>
-                  <li className="offer__inside-item">Coffee machine</li>
-                  <li className="offer__inside-item">Baby seat</li>
-                  <li className="offer__inside-item">Kitchen</li>
-                  <li className="offer__inside-item">Dishwasher</li>
-                  <li className="offer__inside-item">Cabel TV</li>
-                  <li className="offer__inside-item">Fridge</li>
+                  {goods.map((good) => (
+                    <li className="offer__inside-item" key={good}>
+                      {good}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="offer__host">
@@ -151,13 +119,13 @@ function Offer({ setSelectedCardId }: OfferProps) {
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
                     <img
                       className="offer__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
+                      src={`${host.avatarUrl}`}
                       width="74"
                       height="74"
                       alt="Host avatar"
                     />
                   </div>
-                  <span className="offer__user-name">{host.hostName}</span>
+                  <span className="offer__user-name">{host.name}</span>
                   <span className="offer__user-status">{host.isPro}</span>
                 </div>
                 <div className="offer__description">

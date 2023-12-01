@@ -1,7 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute } from './consts';
-
-type AuthenticationStatusType = 'AUTH' | 'NOT_AUTH';
+import { AuthenticationStatusType } from '../types';
 
 type PrivateProps = {
   children: JSX.Element;

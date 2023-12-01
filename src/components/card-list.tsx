@@ -1,11 +1,10 @@
-/* eslint-disable react/no-array-index-key */
 import CitiesCard from '../components/cities-card';
 import { useAppSelector } from '../store';
 import { getOffersByActiveCity } from '../utils/utils';
-import { initialState } from '../store/reduser';
+import { initialState } from '../store/reducer';
 
 type CardListProps = {
-  setSelectedCardId: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedCardId: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function CardList({ setSelectedCardId }: CardListProps) {
@@ -14,22 +13,22 @@ function CardList({ setSelectedCardId }: CardListProps) {
   return (
     <div className="cities__places-list places__list tabs__content">
       {sortedOffers === initialState.sortedOffers
-        ? offersCurrentCity.map((data, index) => (
+        ? offersCurrentCity.map((data) => (
             <CitiesCard
-              onSelectCard={(id: number) => {
+              onSelectCard={(id: string) => {
                 setSelectedCardId(id);
               }}
               cardData={data}
-              key={index}
+              key={data.id}
             />
           ))
-        : sortedOffers.map((data, index) => (
+        : sortedOffers.map((data) => (
             <CitiesCard
-              onSelectCard={(id: number) => {
+              onSelectCard={(id: string) => {
                 setSelectedCardId(id);
               }}
               cardData={data}
-              key={index}
+              key={data.id}
             />
           ))}
     </div>

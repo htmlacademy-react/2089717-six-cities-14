@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../store';
 import { activeCityAction, sortOffersAction } from '../store/action';
-import { initialState } from '../store/reduser';
+import { initialState } from '../store/reducer';
 
 const CITIES = [
   'Paris',
@@ -17,7 +17,6 @@ const changeTabsItemsClass = (city: string, currentCity: string) =>
 function CitiesList() {
   const currentCity = useAppSelector((state) => state.selectedCityName);
   const dispatch = useAppDispatch();
-
   return (
     <ul className="locations__list tabs__list">
       {CITIES.map((city) => (

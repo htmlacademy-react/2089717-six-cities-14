@@ -16,8 +16,8 @@ function useMap(city: City): UseMapResult {
     if (mapRef.current !== null && !isMapRendered) {
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: city.location.lat,
-          lng: city.location.lng,
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
         zoom: city.location.zoom,
       });

@@ -1,41 +1,39 @@
 export type Location = {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
   zoom: number;
-}
-export type Site = {
-  lat: number;
-  lng: number;
 };
+
 export type City = {
   location: Location;
   name: string;
-}
+};
 
 export type Host = {
-  avatarImage: string;
-  hostName: string;
+  avatarUrl: string;
+  name: string;
   isPro: boolean;
-  id: number;
-}
-
-export type OfferModel = {
-  image: string;
-  smalllImage: string;
-  header: string;
-  description: string;
-  isPrime: boolean;
-  isFavourite: boolean;
-  housingType: string;
-  rating: number;
-  bedroomQuantity: number;
-  maxGuest: number;
-  costPerNight: number;
-  city: City;
-  site: Site;
-  host: Host;
-  reviews: number;
   id: number;
 };
 
+export type OfferModel = {
+  previewImage: string;
+  title: string;
+  description: string;
+  isPrime: boolean;
+  isFavorite: boolean;
+  type: string;
+  rating: number;
+  bedrooms: number;
+  maxAdults: number;
+  price: number;
+  goods: string[];
+  city: City;
+  location: Location;
+  host: Host;
+  reviews: number;
+  id: string;
+  images: string[];
+};
 
+export type AuthenticationStatusType = 'AUTH' | 'NOT_AUTH' | 'UNKNOWN';

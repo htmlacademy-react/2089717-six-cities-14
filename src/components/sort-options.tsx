@@ -14,13 +14,13 @@ function SortOptions() {
   };
   const sortLowToHigh = () => {
     const sortedByLowToHighOffers = offersCurrentCity.sort(
-      (a, b) => a.costPerNight - b.costPerNight
+      (a, b) => a.price - b.price
     );
     dispatch(sortOffersAction(sortedByLowToHighOffers));
   };
   const sortHighToLow = () => {
     const sortedByLowToHighOffers = offersCurrentCity.sort(
-      (a, b) => b.costPerNight - a.costPerNight
+      (a, b) => b.price - a.price
     );
     dispatch(sortOffersAction(sortedByLowToHighOffers));
   };

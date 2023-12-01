@@ -7,7 +7,7 @@ import { useAppSelector } from '../store';
 import { getOffersByActiveCity } from '../utils/utils';
 
 type MapProps = {
-  selectedCardId: number;
+  selectedCardId: string;
 };
 
 const defaultCustomIcon = leaflet.icon({
@@ -30,8 +30,8 @@ function Map({ selectedCardId }: MapProps) {
   );
   const activeCityLocation = currentOffer?.city || {
     location: {
-      lat: 48.864716,
-      lng: 2.349014,
+      latitude: 48.864716,
+      longitude: 2.349014,
       zoom: 12,
     },
     name: 'Paris',
@@ -42,15 +42,18 @@ function Map({ selectedCardId }: MapProps) {
   useEffect(() => {
     if (map) {
       map.setView(
-        [activeCityLocation.location.lat, activeCityLocation.location.lng],
+        [
+          activeCityLocation.location.latitude,
+          activeCityLocation.location.longitude,
+        ],
         12
       );
       offersCurrentCity.forEach((offer) => {
         leaflet
           .marker(
             {
-              lat: offer.site.lat,
-              lng: offer.site.lng,
+              lat: offer.location.latitude,
+              lng: offer.location.longitude,
             },
             {
               icon:

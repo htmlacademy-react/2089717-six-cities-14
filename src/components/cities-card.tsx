@@ -5,18 +5,25 @@ import { useParams } from 'react-router-dom';
 
 type CitiesCardProps = {
   cardData: OfferModel;
-  onSelectCard: (id: number) => void;
+  onSelectCard: (id: string) => void;
 };
 
 function CitiesCard(props: CitiesCardProps) {
-  const { image, header, isPrime, isFavourite, housingType, costPerNight, id } =
-    props.cardData;
+  const {
+    previewImage,
+    title,
+    isPrime,
+    isFavorite,
+    type,
+    price,
+    id,
+  } = props.cardData;
 
   const onSelectCard = props.onSelectCard;
   const params = useParams();
   const current = params.id;
 
-  return Number(current) === id ? null : (
+  return current === id ? null : (
     <article
       onMouseEnter={() => onSelectCard(id)}
       className="cities__card place-card"
@@ -30,7 +37,7 @@ function CitiesCard(props: CitiesCardProps) {
         <Link to={`${AppRoute.Offer}${id}`}>
           <img
             className="place-card__image"
-            src={image}
+            src={previewImage}
             width="260"
             height="200"
             alt="Place image"
@@ -40,12 +47,12 @@ function CitiesCard(props: CitiesCardProps) {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{costPerNight}</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
             className={`place-card__bookmark-button ${
-              isFavourite && 'place-card__bookmark-button--active'
+              isFavorite && 'place-card__bookmark-button--active'
             } button`}
             type="button"
           >
@@ -62,9 +69,9 @@ function CitiesCard(props: CitiesCardProps) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}${id}`}>{header}</Link>
+          <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{housingType}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
