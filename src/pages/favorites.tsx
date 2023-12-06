@@ -1,12 +1,15 @@
 /* eslint-disable react/no-array-index-key */
 import { Helmet } from 'react-helmet-async';
-import { generatedOffers } from '../mocks/offers';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../components/consts';
 import CityFavouriteItem from '../components/city-favourite-ltem';
 import MainHeader from '../components/main-header';
+import { useAppSelector } from '../store';
+
 
 function Favorites() {
+  const offers = useAppSelector((state) => state.offers);
+
   return (
     <div className="page">
       <Helmet>
@@ -19,11 +22,11 @@ function Favorites() {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {generatedOffers.map((_, index) => (
+              {offers.map((_, index) => (
                 <CityFavouriteItem
-                  mockData={generatedOffers}
-                  cityToDisplay={generatedOffers[index].city.name}
-                  isFavourite={generatedOffers[index].isFavourite}
+                  mockData={offers}
+                  cityToDisplay={offers[index].city.name}
+                  isFavourite={offers[index].isFavorite}
                   key={index}
                 />
               ))}

@@ -17,4 +17,18 @@ const CITIES_MAP = {
   Dusseldorf: 'Dusseldorf',
 } as const;
 
-export { AppRoute, DEFAULT_OFFER_MAP_ICON, CURRENT_OFFER_MAP_ICON, CITIES_MAP };
+enum APIRoute {
+  Offers = '/offers',
+  FavoriteOffers = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export {
+  AppRoute,
+  DEFAULT_OFFER_MAP_ICON,
+  CURRENT_OFFER_MAP_ICON,
+  CITIES_MAP,
+  APIRoute,
+};
