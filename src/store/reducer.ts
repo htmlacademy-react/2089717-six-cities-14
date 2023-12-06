@@ -1,12 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { CITIES_MAP } from '../components/consts';
-import { OfferModel } from '../types';
+import { CITIES_MAP, AuthenticationStatus } from '../components/consts';
+import { OfferModel, UserData } from '../types';
 import {
   activeCityAction,
   updateOffersAction,
   sortOffersAction,
   loadOffers,
   loadDetailedOffers,
+  checkAuth,
+  requireAuth,
+  requireLogout,
+  getUserData,
 } from './action';
 import { fetchOffersAction } from './api-actions';
 export const initialState: {
@@ -15,12 +19,16 @@ export const initialState: {
   sortedOffers: OfferModel[];
   offer: OfferModel | null;
   fetchStatus: string;
+  authStatus: AuthenticationStatus;
+  userData: UserData | null;
 } = {
   selectedCityName: CITIES_MAP.Paris,
   offers: [],
   sortedOffers: [],
   offer: null,
   fetchStatus: 'idle',
+  authStatus: AuthenticationStatus.unknown,
+  userData: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -45,7 +53,20 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOffersAction.fulfilled, (state) => {
       state.fetchStatus = 'success';
+    })
+    .addCase(fetchOffersAction.rejected, (state) => {
+      state.fetchStatus = 'error';
+    })
+    .addCase(checkAuth, (state, action) => {
+      state.authStatus = action.payload;
+    })
+    .addCase(requireAuth, (state, action) => {
+      state.authStatus = action.payload;
+    })
+    .addCase(requireLogout, (state, action) => {
+      state.authStatus = action.payload;
+    })
+    .addCase(getUserData, (state, action) => {
+      state.userData = action.payload;
     });
 });
-
-

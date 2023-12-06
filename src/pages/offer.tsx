@@ -21,7 +21,7 @@ function Offer({ setSelectedCardId }: OfferProps) {
     if (current) {
       dispatch(fetchOfferDetailedAction(current));
     }
-  }, []);
+  }, [current]);
   const offer = useAppSelector((state) => state.offer);
   if (!offer) {
     return <ErrorPage />;

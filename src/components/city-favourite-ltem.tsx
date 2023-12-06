@@ -3,14 +3,14 @@ import FavouriteCard from '../components/favourite-card';
 import { OfferModel } from '../types';
 
 type CityFavouriteItemProps = {
-  mockData: OfferModel[];
+  offers: OfferModel[];
   cityToDisplay: string;
   isFavourite: boolean;
 };
 
 function CityFavouriteItem(props: CityFavouriteItemProps) {
-  const { mockData, cityToDisplay, isFavourite } = props;
-  const filteredCards = mockData.filter(
+  const { offers, cityToDisplay, isFavourite } = props;
+  const filteredCards = offers.filter(
     (data) => data.city.name === cityToDisplay
   );
 

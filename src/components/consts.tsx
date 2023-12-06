@@ -25,10 +25,18 @@ enum APIRoute {
   Logout = '/logout',
 }
 
+
+enum AuthenticationStatus {
+  auth = 'AUTH',
+  notAuth = 'NOT_AUTH',
+  unknown = 'UNKNOWN',
+}
+
 export {
   AppRoute,
   DEFAULT_OFFER_MAP_ICON,
   CURRENT_OFFER_MAP_ICON,
   CITIES_MAP,
   APIRoute,
+  AuthenticationStatus,
 };

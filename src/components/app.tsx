@@ -8,9 +8,13 @@ import { AppRoute } from './consts';
 import { HelmetProvider } from 'react-helmet-async';
 import PrivateRoute from '../components/privite-route';
 import { useState } from 'react';
+import { useAppDispatch } from '../store';
+import { checkAuthAction } from '../store/api-actions';
 
 function App() {
-  const [selectedCardId, setSelectedCardId] = useState(0);
+  const [selectedCardId, setSelectedCardId] = useState('');
+  const dispatch = useAppDispatch();
+  dispatch(checkAuthAction());
 
   return (
     <HelmetProvider>
@@ -28,14 +32,12 @@ function App() {
           <Route path={AppRoute.Login} element={<Login />} />
           <Route
             path={`${AppRoute.Offer}:id`}
-            element={
-              <Offer setSelectedCardId={setSelectedCardId} />
-            }
+            element={<Offer setSelectedCardId={setSelectedCardId} />}
           />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authenticationCurrentStatus={'AUTH'}>
+              <PrivateRoute>
                 <Favorites />
               </PrivateRoute>
             }

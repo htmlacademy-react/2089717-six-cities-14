@@ -9,17 +9,41 @@ import { getOffersByActiveCity } from '../utils/utils';
 import SortOptions from '../components/sort-options';
 import { useEffect } from 'react';
 import { fetchOffersAction } from '../store/api-actions';
-import Spinner from '../components/spinner';
+import Spinner from '../components/spinner/spinner';
+import NotConnectionPage from '../components/loading-error/loading-error';
+import { getToken } from '../local-storage.ts/userData';
 
 type MainPageProps = {
   setSelectedCardId: React.Dispatch<React.SetStateAction<string>>;
   selectedCardId: string;
 };
 
+const renderDependingFetchStatus = (
+  fetchStatus: string,
+  spinner: JSX.Element,
+  errorMessage: JSX.Element,
+  content: JSX.Element
+): JSX.Element | undefined => {
+  // const COMPONENTS: { [key: string]: JSX.Element } = {
+  //   loading: spinner,
+  //   error: errorMessage,
+  //   success: content,
+  // };
+  // return COMPONENTS[fetchStatus];
+  if (fetchStatus === 'loading') {
+    return spinner;
+  } else if (fetchStatus === 'error') {
+    return errorMessage;
+  } else {
+    return content;
+  }
+};
+
 function MainPage({ setSelectedCardId, selectedCardId }: MainPageProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    getToken();
     dispatch(fetchOffersAction());
   }, []);
 
@@ -39,9 +63,10 @@ function MainPage({ setSelectedCardId, selectedCardId }: MainPageProps) {
             <CitiesList />
           </section>
         </div>
-        {fetchStatus === 'loading' ? (
-          <Spinner />
-        ) : (
+        {renderDependingFetchStatus(
+          fetchStatus,
+          <Spinner />,
+          <NotConnectionPage />,
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
