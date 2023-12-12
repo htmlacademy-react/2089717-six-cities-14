@@ -21,3 +21,9 @@ export const requireAuth = createAction<AuthenticationStatus>('user/login');
 export const requireLogout = createAction<AuthenticationStatus>('user/logout');
 
 export const getUserData = createAction<UserData | null>('user/email');
+
+export const favoriteOffers = createAction<OfferModel[]>('data/favoriteOffers');
+
+export const loadFavoriteOffers = createAction<OfferModel[]>('data/loadFavoriteOffers');
+
+export const sendFavoriteOffers = createAction<OfferModel>('data/sendFavoriteOffers');

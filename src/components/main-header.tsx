@@ -9,6 +9,7 @@ function MainHeader() {
   const authenticationCurrentStatus = useAppSelector(
     (state) => state.authStatus
   );
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   return (
     <header className="header">
       <div className="container">
@@ -28,7 +29,9 @@ function MainHeader() {
                     <span className="header__user-name user__name">
                       {getEmail()}
                     </span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">
+                      {favoriteOffers.length}
+                    </span>
                   </Link>
                 ) : (
                   false

@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { OfferModel, AuthSettings, UserData } from '../types';
+import { OfferModel, AuthSettings, UserData, FavoriteStatus } from '../types';
 import { APIRoute, AppRoute, AuthenticationStatus } from '../components/consts';
 import {
   loadOffers,
@@ -9,6 +9,7 @@ import {
   requireAuth,
   requireLogout,
   getUserData,
+  loadFavoriteOffers,
 } from './action';
 import { saveUserData, deleteUserData } from '../local-storage.ts/userData';
 type Extra = {
@@ -38,7 +39,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, Extra>(
     try {
       await api.get(APIRoute.Login);
       dispatch(checkAuth(AuthenticationStatus.auth));
-    } catch {
+    } catch (err) {
       dispatch(checkAuth(AuthenticationStatus.notAuth));
     }
   }
@@ -67,5 +68,29 @@ export const logoutAction = createAsyncThunk<void, undefined, Extra>(
     await api.delete(APIRoute.Logout);
     deleteUserData();
     dispatch(requireLogout(AuthenticationStatus.notAuth));
+  }
+);
+
+export const getFavoriteOffers = createAsyncThunk<void, undefined, Extra>(
+  'data/favoriteOffers',
+  async (_arg, { extra: api, dispatch }) => {
+    const { data } = await api.get<OfferModel[]>(APIRoute.FavoriteOffers);
+    dispatch(loadFavoriteOffers(data));
+    console.log(data);
+  }
+);
+
+export const changeStatusFavoriteOffers = createAsyncThunk<
+  void,
+  FavoriteStatus,
+  Extra
+>(
+  'data/sendFavoriteOffers',
+  async ({ offerId, status }, { extra: api, dispatch }) => {
+    const response = await api.post<OfferModel>(
+      `${APIRoute.FavoriteOffers}/${offerId}/${status}`,
+      { offerId, status }
+    );
+    console.log(response);
   }
 );

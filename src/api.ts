@@ -10,12 +10,12 @@ export const createAPI = (): AxiosInstance => {
   });
 
   api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    //записываем в переменную token, сохранённый в хранилище (если он есть)
     const token = getToken();
-
+    //если токен есть, то записываем его в свойство x-token свойства конфигцурации запроса headers
     if (token) {
       config.headers['x-token'] = token;
     }
-
     return config;
   });
 

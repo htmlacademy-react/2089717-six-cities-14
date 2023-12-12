@@ -8,10 +8,9 @@ import { useAppDispatch, useAppSelector } from '../store';
 import { getOffersByActiveCity } from '../utils/utils';
 import SortOptions from '../components/sort-options';
 import { useEffect } from 'react';
-import { fetchOffersAction } from '../store/api-actions';
+import { fetchOffersAction, getFavoriteOffers } from '../store/api-actions';
 import Spinner from '../components/spinner/spinner';
 import NotConnectionPage from '../components/loading-error/loading-error';
-import { getToken } from '../local-storage.ts/userData';
 
 type MainPageProps = {
   setSelectedCardId: React.Dispatch<React.SetStateAction<string>>;
@@ -43,13 +42,14 @@ function MainPage({ setSelectedCardId, selectedCardId }: MainPageProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getToken();
     dispatch(fetchOffersAction());
+    dispatch(getFavoriteOffers());
   }, []);
 
   const currentCity = useAppSelector((state) => state.selectedCityName);
   const offersCurrentCity = useAppSelector(getOffersByActiveCity);
   const fetchStatus = useAppSelector((state) => state.fetchStatus);
+
   return (
     <div className="page page--gray page--main">
       <Helmet>

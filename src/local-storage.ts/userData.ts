@@ -13,7 +13,7 @@ export const getUserData = (): UserData | void => {
   if (userData) {
     return JSON.parse(userData);
   }
-};
+}; 
 
 export const getToken = (): string => {
   const userData = getUserData();

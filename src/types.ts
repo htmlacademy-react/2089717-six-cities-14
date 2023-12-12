@@ -55,3 +55,8 @@ export type UserData = {
   email: string;
   token: string;
 };
+
+export type FavoriteStatus = {
+  offerId: OfferModel['id'];
+  status: 1 | 0;
+};

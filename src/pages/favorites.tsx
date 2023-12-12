@@ -9,7 +9,7 @@ import { useAppSelector } from '../store';
 
 function Favorites() {
   const offers = useAppSelector((state) => state.offers);
-
+  // const favoriteOffers = useA
   return (
     <div className="page">
       <Helmet>

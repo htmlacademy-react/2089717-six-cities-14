@@ -11,6 +11,7 @@ import {
   requireAuth,
   requireLogout,
   getUserData,
+  loadFavoriteOffers,
 } from './action';
 import { fetchOffersAction } from './api-actions';
 export const initialState: {
@@ -21,6 +22,7 @@ export const initialState: {
   fetchStatus: string;
   authStatus: AuthenticationStatus;
   userData: UserData | null;
+  favoriteOffers: OfferModel[];
 } = {
   selectedCityName: CITIES_MAP.Paris,
   offers: [],
@@ -29,6 +31,7 @@ export const initialState: {
   fetchStatus: 'idle',
   authStatus: AuthenticationStatus.unknown,
   userData: null,
+  favoriteOffers: [],
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -68,5 +71,10 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(getUserData, (state, action) => {
       state.userData = action.payload;
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
     });
 });
+
+;
