@@ -9,7 +9,7 @@ import { useAppSelector } from '../store';
 
 function Favorites() {
   const offers = useAppSelector((state) => state.offers);
-
+  // const favoriteOffers = useA
   return (
     <div className="page">
       <Helmet>
@@ -24,7 +24,7 @@ function Favorites() {
             <ul className="favorites__list">
               {offers.map((_, index) => (
                 <CityFavouriteItem
-                  mockData={offers}
+                  offers={offers}
                   cityToDisplay={offers[index].city.name}
                   isFavourite={offers[index].isFavorite}
                   key={index}

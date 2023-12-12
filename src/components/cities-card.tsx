@@ -2,6 +2,11 @@ import { OfferModel } from '../types';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../components/consts';
 import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../store';
+import {
+  changeStatusFavoriteOffers,
+  getFavoriteOffers,
+} from '../store/api-actions';
 
 type CitiesCardProps = {
   cardData: OfferModel;
@@ -9,19 +14,13 @@ type CitiesCardProps = {
 };
 
 function CitiesCard(props: CitiesCardProps) {
-  const {
-    previewImage,
-    title,
-    isPrime,
-    isFavorite,
-    type,
-    price,
-    id,
-  } = props.cardData;
+  const { previewImage, title, isPrime, isFavorite, type, price, id } =
+    props.cardData;
 
   const onSelectCard = props.onSelectCard;
   const params = useParams();
   const current = params.id;
+  const dispatch = useAppDispatch();
 
   return current === id ? null : (
     <article
@@ -51,6 +50,18 @@ function CitiesCard(props: CitiesCardProps) {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
+            onClick={() => {
+              if (isFavorite) {
+                dispatch(
+                  changeStatusFavoriteOffers({ offerId: id, status: 0 })
+                );
+              } else {
+                dispatch(
+                  changeStatusFavoriteOffers({ offerId: id, status: 1 })
+                );
+              }
+              dispatch(getFavoriteOffers());
+            }}
             className={`place-card__bookmark-button ${
               isFavorite && 'place-card__bookmark-button--active'
             } button`}

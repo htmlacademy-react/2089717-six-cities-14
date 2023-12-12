@@ -34,7 +34,7 @@ function useMap(city: City): UseMapResult {
       setMap(instance);
       setIsRendered((isRendered) => !isRendered);
     }
-  }, [city]);
+  }, [city, isMapRendered]);
 
   return { map, mapRef };
 }

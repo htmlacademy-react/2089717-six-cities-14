@@ -10,23 +10,21 @@ type CardListProps = {
 function CardList({ setSelectedCardId }: CardListProps) {
   const offersCurrentCity = useAppSelector(getOffersByActiveCity);
   const sortedOffers = useAppSelector((state) => state.sortedOffers);
+  const onSelectCard = (id: string) => setSelectedCardId(id);
+
   return (
     <div className="cities__places-list places__list tabs__content">
       {sortedOffers === initialState.sortedOffers
         ? offersCurrentCity.map((data) => (
             <CitiesCard
-              onSelectCard={(id: string) => {
-                setSelectedCardId(id);
-              }}
+              onSelectCard={onSelectCard}
               cardData={data}
               key={data.id}
             />
           ))
         : sortedOffers.map((data) => (
             <CitiesCard
-              onSelectCard={(id: string) => {
-                setSelectedCardId(id);
-              }}
+              onSelectCard={onSelectCard}
               cardData={data}
               key={data.id}
             />
