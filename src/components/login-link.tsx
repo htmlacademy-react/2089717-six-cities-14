@@ -15,6 +15,9 @@ function LoginLink() {
       className="header__nav-link"
       to={AppRoute.Login}
       onClick={() => {
+        if (authenticationCurrentStatus !== AuthenticationStatus.auth) {
+          return;
+        }
         dispatch(logoutAction());
         dispatch(getUserData(initialState.userData));
       }}

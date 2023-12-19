@@ -6,10 +6,6 @@ import { DEFAULT_OFFER_MAP_ICON, CURRENT_OFFER_MAP_ICON } from './consts';
 import { useAppSelector } from '../store';
 import { getOffersByActiveCity } from '../utils/utils';
 
-type MapProps = {
-  selectedCardId: string;
-};
-
 const defaultCustomIcon = leaflet.icon({
   iconUrl: DEFAULT_OFFER_MAP_ICON,
   iconSize: [27, 39],
@@ -22,8 +18,9 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [13.5, 39],
 });
 
-function Map({ selectedCardId }: MapProps) {
+function Map() {
   const currentCity = useAppSelector((state) => state.selectedCityName);
+  const selectedCardId = useAppSelector((state) => state.selectedCardId);
   const offersCurrentCity = useAppSelector(getOffersByActiveCity);
   const currentOffer = offersCurrentCity.find(
     (offer) => offer.city.name === `${currentCity}`

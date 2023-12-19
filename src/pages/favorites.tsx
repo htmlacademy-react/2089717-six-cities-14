@@ -5,11 +5,24 @@ import { AppRoute } from '../components/consts';
 import CityFavouriteItem from '../components/city-favourite-ltem';
 import MainHeader from '../components/main-header';
 import { useAppSelector } from '../store';
+import { OfferModel } from '../types';
 
+type GroupedOffers = {
+  [cityName: string]: Array<OfferModel>;
+};
 
 function Favorites() {
-  const offers = useAppSelector((state) => state.offers);
-  // const favoriteOffers = useA
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
+
+  const groupedOffers: GroupedOffers = {};
+  favoriteOffers.forEach((offer) => {
+    const cityName = offer.city.name;
+    if (!(cityName in groupedOffers)) {
+      groupedOffers[cityName] = [];
+    }
+    groupedOffers[cityName].push(offer);
+  });
+
   return (
     <div className="page">
       <Helmet>
@@ -22,12 +35,11 @@ function Favorites() {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {offers.map((_, index) => (
+              {Object.entries(groupedOffers).map(([cityName, offers]) => (
                 <CityFavouriteItem
+                  cityToDisplay={cityName}
+                  key={cityName}
                   offers={offers}
-                  cityToDisplay={offers[index].city.name}
-                  isFavourite={offers[index].isFavorite}
-                  key={index}
                 />
               ))}
             </ul>

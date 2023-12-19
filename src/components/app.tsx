@@ -4,36 +4,30 @@ import Offer from '../pages/offer';
 import Favorites from '../pages/favorites';
 import ErrorPage from './error-page';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute } from './consts';
+import { AppRoute, AuthenticationStatus } from './consts';
 import { HelmetProvider } from 'react-helmet-async';
 import PrivateRoute from '../components/privite-route';
-import { useState } from 'react';
-import { useAppDispatch } from '../store';
-import { checkAuthAction } from '../store/api-actions';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../store';
+import { checkAuthAction, getFavoriteOffers } from '../store/api-actions';
 
 function App() {
-  const [selectedCardId, setSelectedCardId] = useState('');
   const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.authStatus);
   dispatch(checkAuthAction());
 
+  useEffect(() => {
+    if (authStatus === AuthenticationStatus.auth) {
+      dispatch(getFavoriteOffers());
+    }
+  }, [authStatus]);
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route
-            path={`${AppRoute.Main}`}
-            element={
-              <MainPage
-                setSelectedCardId={setSelectedCardId}
-                selectedCardId={selectedCardId}
-              />
-            }
-          />
+          <Route path={`${AppRoute.Main}`} element={<MainPage />} />
           <Route path={AppRoute.Login} element={<Login />} />
-          <Route
-            path={`${AppRoute.Offer}:id`}
-            element={<Offer setSelectedCardId={setSelectedCardId} />}
-          />
+          <Route path={`${AppRoute.Offer}:id`} element={<Offer />} />
           <Route
             path={AppRoute.Favorites}
             element={

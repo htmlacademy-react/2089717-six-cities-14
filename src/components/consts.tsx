@@ -32,6 +32,15 @@ enum AuthenticationStatus {
   unknown = 'UNKNOWN',
 }
 
+const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+
 export {
   AppRoute,
   DEFAULT_OFFER_MAP_ICON,
@@ -39,4 +48,5 @@ export {
   CITIES_MAP,
   APIRoute,
   AuthenticationStatus,
+  CITIES,
 };

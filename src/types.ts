@@ -22,7 +22,7 @@ export type OfferModel = {
   previewImage: string;
   title: string;
   description: string;
-  isPrime: boolean;
+  isPremium: boolean;
   isFavorite: boolean;
   type: string;
   rating: number;
@@ -58,5 +58,37 @@ export type UserData = {
 
 export type FavoriteStatus = {
   offerId: OfferModel['id'];
-  status: 1 | 0;
+  isFavorite: boolean;
+};
+
+export type ToggleOfferIsFavoritePayload = {
+  offerId: string;
+  isFavorite: boolean;
+};
+
+export type ReviewModel = {
+  id: string;
+  date: string;
+  user: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  comment: string;
+  rating: number;
+};
+
+export type ReviewModelDate = {
+  id: string;
+  date: {
+    month: string;
+    year: string;
+  };
+  user: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  comment: string;
+  rating: number;
 };

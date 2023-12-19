@@ -1,45 +1,50 @@
+import { useAppDispatch } from '../store';
 import { OfferModel } from '../types';
+import { changeStatusFavoriteOffers } from '../store/api-actions';
+import { Link } from 'react-router-dom';
+import { AppRoute } from './consts';
 
 type FavouriteCardProps = {
   card: OfferModel;
 };
 
 function FavouriteCard(props: FavouriteCardProps) {
-  const {
-    smalllImage,
-    header,
-    isPrime,
-    isFavourite,
-    housingType,
-    costPerNight,
-  } = props.card;
+  const dispatch = useAppDispatch();
+
+  const { previewImage, title, isPremium, isFavorite, type, price, id, rating } =
+    props.card;
 
   return (
-    isFavourite && (
+    isFavorite && (
       <article className="favorites__card place-card">
-        {isPrime && (
+        {isPremium && (
           <div className="place-card__mark">
             <span>Premium</span>
           </div>
         )}
         <div className="favorites__image-wrapper place-card__image-wrapper">
-          <a href="#">
+          <Link to={`${AppRoute.Offer}${id}`}>
             <img
               className="place-card__image"
-              src={smalllImage}
+              src={previewImage}
               width="150"
               height="110"
               alt="Place image"
             />
-          </a>
+          </Link>
         </div>
         <div className="favorites__card-info place-card__info">
           <div className="place-card__price-wrapper">
             <div className="place-card__price">
-              <b className="place-card__price-value">{`€${costPerNight}`}</b>
+              <b className="place-card__price-value">{`€${price}`}</b>
               <span className="place-card__price-text">/night</span>
             </div>
             <button
+              onClick={() => {
+                dispatch(
+                  changeStatusFavoriteOffers({ offerId: id, isFavorite })
+                );
+              }}
               className="place-card__bookmark-button place-card__bookmark-button--active button"
               type="button"
             >
@@ -51,14 +56,18 @@ function FavouriteCard(props: FavouriteCardProps) {
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">
-              <span style={{ width: '100%' }} />
+              <span
+                style={{
+                  width: `${rating ? rating * 20 : 80}%`,
+                }}
+              />
               <span className="visually-hidden">Rating</span>
             </div>
           </div>
           <h2 className="place-card__name">
-            <a href="#">{header}</a>
+            <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
           </h2>
-          <p className="place-card__type">{housingType}</p>
+          <p className="place-card__type">{type}</p>
         </div>
       </article>
     )
