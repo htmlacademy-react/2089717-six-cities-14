@@ -41,3 +41,7 @@ export const setFavorite = createAction<boolean | string>('data/setFavorite');
 export const loadReviews = createAction<ReviewModel[]>('data/loadReviews');
 
 export const setReviews = createAction<ReviewModel[]>('data/setReviews');
+
+export const setReviewWithCommentAndRating = createAction<ReviewModel>('data/setReviewWithCommentAndRating');
+
+export const setUserReview = createAction<ReviewModel>('data/setUserReview');

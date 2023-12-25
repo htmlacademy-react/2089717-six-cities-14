@@ -21,6 +21,7 @@ function App() {
       dispatch(getFavoriteOffers());
     }
   }, [authStatus]);
+
   return (
     <HelmetProvider>
       <BrowserRouter>

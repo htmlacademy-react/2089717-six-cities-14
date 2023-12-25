@@ -7,7 +7,7 @@ export const getOffersByActiveCity = ({
 }: State): OfferModel[] =>
   offers.filter((offer) => offer.city.name === selectedCityName);
 
-export const checkIsFavoriteOffer = (id: string) => (state: State) => state.favoriteOffers.some((offer) => offer.id === id);
+export const checkIsFavoriteOffer = (id: string | undefined) => (state: State) => state.favoriteOffers.some((offer) => offer.id === id);
 
 export const renderDependingFetchStatus = (
   fetchStatus: string,

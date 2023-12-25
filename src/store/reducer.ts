@@ -15,8 +15,13 @@ import {
   getOffersNearby,
   setCardId,
   setReviews,
+  setUserReview,
 } from './action';
-import { fetchOffersAction, fetchOfferDetailedAction } from './api-actions';
+import {
+  fetchOffersAction,
+  fetchOfferDetailedAction,
+  sentReview,
+} from './api-actions';
 export const initialState: {
   selectedCityName: string;
   offers: OfferModel[];
@@ -25,6 +30,7 @@ export const initialState: {
   fetchOffersStatus: string;
   fetchDetailedOfferStatus: string;
   authStatus: AuthenticationStatus;
+  sentReviewStatus: string;
   userData: UserData | null;
   favoriteOffers: OfferModel[];
   offersNearby: OfferModel[];
@@ -37,6 +43,7 @@ export const initialState: {
   offer: null,
   fetchOffersStatus: 'idle',
   fetchDetailedOfferStatus: 'idle',
+  sentReviewStatus: 'idle',
   authStatus: AuthenticationStatus.unknown,
   userData: null,
   favoriteOffers: [],
@@ -103,14 +110,18 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setReviews, (state, action) => {
       state.reviews = action.payload;
+    })
+    .addCase(setUserReview, (state, action) => {
+      state.reviews.push(action.payload);
+    })
+    .addCase(sentReview.pending, (state) => {
+      state.sentReviewStatus = 'loading';
+    })
+    .addCase(sentReview.fulfilled, (state) => {
+      state.sentReviewStatus = 'success';
+    })
+    .addCase(sentReview.rejected, (state) => {
+      state.sentReviewStatus = 'error';
     });
 });
 
-// .addCase(toggleOfferIsFavorite, (state, action) => {
-//   const currentOffer = state.offers.find(
-//     (offer) => offer.id === action.payload.offerId
-//   );
-//   if (currentOffer) {
-//     currentOffer.isFavorite = action.payload.isFavorite;
-//   }
-// })

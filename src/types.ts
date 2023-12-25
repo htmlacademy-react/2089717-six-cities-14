@@ -81,8 +81,9 @@ export type ReviewModel = {
 export type ReviewModelDate = {
   id: string;
   date: {
-    month: string;
-    year: string;
+    month: number;
+    year: number;
+    time: number;
   };
   user: {
     name: string;

@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import MainHeader from '../components/main-header';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ReviewsForm from '../components/reviews_form';
 import { useAppDispatch, useAppSelector } from '../store';
 import { useEffect } from 'react';
@@ -18,7 +18,8 @@ import NotConnectionPage from '../components/loading-error/loading-error';
 import Spinner from '../components/spinner/spinner';
 import CardListNearby from '../components/cities-nearby';
 import ReviewsList from '../components/reviews-list';
-import { AuthenticationStatus } from '../components/consts';
+import { AppRoute, AuthenticationStatus } from '../components/consts';
+import OfferMap from '../components/offer-map';
 
 function Offer() {
   const dispatch = useAppDispatch();
@@ -61,7 +62,7 @@ function Offer() {
   }, [id, current]);
 
   return (
-    <div className="page">
+    <div className="page" style={{ height: '100vh' }}>
       <Helmet>
         <title>{'6 cities - Offer'}</title>
       </Helmet>
@@ -182,15 +183,34 @@ function Offer() {
                     Reviews · <span className="reviews__amount">{reviews}</span>
                   </h2>
                   {<ReviewsList />}
-                  {<ReviewsForm />}
+                  {authStatus === AuthenticationStatus.auth ? (
+                    <ReviewsForm id={id} />
+                  ) : (
+                    <Link
+                      to={AppRoute.Login}
+                      style={{
+                        paddingLeft: '30px',
+                        display: 'flex',
+                        justifyContent: 'space-around',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <h1>SIGH IN TO WRITE REVIEW</h1>
+                      <img
+                        width="50px"
+                        height="50px"
+                        src="https://symbl-world.akamaized.net/i/webp/80/4139df052e66413dcb2ef0b64d1bdd.webp"
+                      />
+                    </Link>
+                  )}
                 </section>
               </div>
             </div>
-            <section className="offer__map map" />
+            <OfferMap />
           </section>
           <div className="container">
             <section className="near-places places">
-              <h2 className="near-places__title">
+              <h2 className="near-places__title" style={{marginBottom: '15px'}}>
                 Other places in the neighbourhood
               </h2>
               <div className="near-places__list places__list">

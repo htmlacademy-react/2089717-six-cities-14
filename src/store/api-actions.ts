@@ -17,8 +17,8 @@ import {
   getUserData,
   loadFavoriteOffers,
   getOffersNearby,
-  toggleOfferIsFavorite,
   setReviews,
+  setUserReview,
 } from './action';
 import { saveUserData, deleteUserData } from '../local-storage.ts/userData';
 import { AppDispatch, State } from '.';
@@ -123,10 +123,28 @@ export const fetchOffersNearby = createAsyncThunk<
   OfferModel['id'],
   ThunkApi
 >('data/loadOffersNearby', async (offerId, { extra: api, dispatch }) => {
-  const response = await api.get<OfferModel[]>(
-    `${APIRoute.Offers}/${offerId}/nearby`
-  );
-  dispatch(getOffersNearby(response.data));
+  try {
+    const response = await api.get<OfferModel[]>(
+      `${APIRoute.Offers}/${offerId}/nearby`
+    );
+
+    const randomInteger = (min: number, max: number) => {
+      const rand: number = min + Math.random() * (max + 1 - min);
+      return Math.floor(rand);
+    };
+
+    const offersNearbyS = new Set<OfferModel>();
+
+    while (offersNearbyS.size < 3 && response.data.length > 3) {
+      offersNearbyS.add(response.data[randomInteger(0, response.data.length)]);
+    }
+
+    const offersNearby = Array.from(offersNearbyS);
+
+    dispatch(getOffersNearby(offersNearby));
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 export const fetchReview = createAsyncThunk<void, OfferModel['id'], ThunkApi>(
@@ -137,5 +155,28 @@ export const fetchReview = createAsyncThunk<void, OfferModel['id'], ThunkApi>(
     );
 
     dispatch(setReviews(data));
+  }
+);
+
+export const sentReview = createAsyncThunk<
+  void,
+  {
+    offerId: OfferModel['id'] | undefined;
+    rating: number;
+    comment: string;
+    clearForm: void;
+  },
+  ThunkApi
+>(
+  'data/setReviewWithCommentAndRating',
+  async ({ offerId, rating, comment, clearForm }, { extra: api, dispatch }) => {
+    const { data, status } = await api.post<ReviewModel>(
+      `${APIRoute.Comments}/${offerId}`,
+      { rating, comment }
+    );
+    dispatch(setUserReview(data));
+    if (status < 300) {
+      clearForm();
+    }
   }
 );

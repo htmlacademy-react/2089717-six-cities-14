@@ -11,7 +11,7 @@ import {
 } from '../utils/utils';
 import SortOptions from '../components/sort-options';
 import { useEffect } from 'react';
-import { fetchOffersAction, getFavoriteOffers } from '../store/api-actions';
+import { fetchOffersAction } from '../store/api-actions';
 import Spinner from '../components/spinner/spinner';
 import NotConnectionPage from '../components/loading-error/loading-error';
 
