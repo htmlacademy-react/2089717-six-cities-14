@@ -2,33 +2,33 @@ import { OfferModel } from '../types';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../components/consts';
 import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../store';
+import { changeStatusFavoriteOffers } from '../store/api-actions';
+import { setCardId } from '../store/action';
+import { checkIsFavoriteOffer } from '../utils/utils';
+import { AuthenticationStatus } from '../components/consts';
 
 type CitiesCardProps = {
   cardData: OfferModel;
-  onSelectCard: (id: string) => void;
 };
 
 function CitiesCard(props: CitiesCardProps) {
-  const {
-    previewImage,
-    title,
-    isPrime,
-    isFavorite,
-    type,
-    price,
-    id,
-  } = props.cardData;
+  const { previewImage, title, isPremium, type, price, id, rating } =
+    props.cardData;
+  const isFavorite = useAppSelector(checkIsFavoriteOffer(id));
 
-  const onSelectCard = props.onSelectCard;
+  const authStatus = useAppSelector((state) => state.authStatus);
+
   const params = useParams();
   const current = params.id;
+  const dispatch = useAppDispatch();
 
   return current === id ? null : (
     <article
-      onMouseEnter={() => onSelectCard(id)}
+      onMouseEnter={() => dispatch(setCardId(id))}
       className="cities__card place-card"
     >
-      {isPrime && (
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
@@ -51,9 +51,14 @@ function CitiesCard(props: CitiesCardProps) {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
+            onClick={() =>
+              dispatch(changeStatusFavoriteOffers({ isFavorite, offerId: id }))
+            }
             className={`place-card__bookmark-button ${
               isFavorite && 'place-card__bookmark-button--active'
-            } button`}
+            } button ${
+              authStatus !== AuthenticationStatus.auth ? 'visually-hidden' : ''
+            }`}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -64,7 +69,11 @@ function CitiesCard(props: CitiesCardProps) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span
+              style={{
+                width: `${rating ? rating * 20 : 80}%`,
+              }}
+            ></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

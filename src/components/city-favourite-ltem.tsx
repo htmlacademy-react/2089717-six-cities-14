@@ -3,34 +3,28 @@ import FavouriteCard from '../components/favourite-card';
 import { OfferModel } from '../types';
 
 type CityFavouriteItemProps = {
-  mockData: OfferModel[];
   cityToDisplay: string;
-  isFavourite: boolean;
+  offers: Array<OfferModel>;
 };
 
 function CityFavouriteItem(props: CityFavouriteItemProps) {
-  const { mockData, cityToDisplay, isFavourite } = props;
-  const filteredCards = mockData.filter(
-    (data) => data.city.name === cityToDisplay
-  );
+  const { cityToDisplay, offers } = props;
 
   return (
-    isFavourite && (
-      <li className="favorites__locations-items">
-        <div className="favorites__locations locations locations--current">
-          <div className="locations__item">
-            <a className="locations__item-link" href="#">
-              <span>{cityToDisplay}</span>
-            </a>
-          </div>
+    <li className="favorites__locations-items">
+      <div className="favorites__locations locations locations--current">
+        <div className="locations__item">
+          <a className="locations__item-link" href="#">
+            <span>{cityToDisplay}</span>
+          </a>
         </div>
-        <div className="favorites__places">
-          {filteredCards.map((data, index) => (
-            <FavouriteCard card={data} key={index} />
-          ))}
-        </div>
-      </li>
-    )
+      </div>
+      <div className="favorites__places">
+        {offers.map((data) => (
+          <FavouriteCard card={data} key={data.id} />
+        ))}
+      </div>
+    </li>
   );
 }
 

@@ -1,3 +1,5 @@
+import { NavigateFunction } from 'react-router-dom';
+
 export type Location = {
   latitude: number;
   longitude: number;
@@ -20,7 +22,7 @@ export type OfferModel = {
   previewImage: string;
   title: string;
   description: string;
-  isPrime: boolean;
+  isPremium: boolean;
   isFavorite: boolean;
   type: string;
   rating: number;
@@ -36,4 +38,58 @@ export type OfferModel = {
   images: string[];
 };
 
-export type AuthenticationStatusType = 'AUTH' | 'NOT_AUTH' | 'UNKNOWN';
+export type AuthData = {
+  email: string | undefined;
+  password: string | undefined;
+};
+
+export type AuthSettings = {
+  login: AuthData;
+  navigate: NavigateFunction;
+};
+
+export type UserData = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+  email: string;
+  token: string;
+};
+
+export type FavoriteStatus = {
+  offerId: OfferModel['id'];
+  isFavorite: boolean;
+};
+
+export type ToggleOfferIsFavoritePayload = {
+  offerId: string;
+  isFavorite: boolean;
+};
+
+export type ReviewModel = {
+  id: string;
+  date: string;
+  user: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  comment: string;
+  rating: number;
+};
+
+export type ReviewModelDate = {
+  id: string;
+  date: {
+    month: number;
+    year: number;
+    time: number;
+  };
+  user: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  comment: string;
+  rating: number;
+};

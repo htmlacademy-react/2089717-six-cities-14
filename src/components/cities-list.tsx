@@ -1,15 +1,8 @@
 import { useAppDispatch, useAppSelector } from '../store';
 import { activeCityAction, sortOffersAction } from '../store/action';
 import { initialState } from '../store/reducer';
+import { CITIES } from './consts';
 
-const CITIES = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-];
 
 const changeTabsItemsClass = (city: string, currentCity: string) =>
   city === currentCity ? 'tabs__item--active' : 'tabs__item';

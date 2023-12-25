@@ -18,11 +18,12 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [13.5, 39],
 });
 
-function Map() {
+function OfferMap() {
   const currentCity = useAppSelector((state) => state.selectedCityName);
   const selectedCardId = useAppSelector((state) => state.selectedCardId);
-  const offersCurrentCity = useAppSelector(getOffersByActiveCity);
-  const currentOffer = offersCurrentCity.find(
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+  console.log(offersNearby);
+  const currentOffer = offersNearby.find(
     (offer) => offer.city.name === `${currentCity}`
   );
   const activeCityLocation = currentOffer?.city || {
@@ -45,33 +46,47 @@ function Map() {
         ],
         12
       );
-      offersCurrentCity.forEach((offer) => {
-        leaflet
-          .marker(
-            {
-              lat: offer.location.latitude,
-              lng: offer.location.longitude,
-            },
-            {
-              icon:
-                offer.id === selectedCardId
-                  ? currentCustomIcon
-                  : defaultCustomIcon,
-            }
-          )
-          .addTo(map);
+      offersNearby.forEach((offer) => {
+        if (offer.city.location && activeCityLocation.location) {
+          leaflet
+            .marker(
+              {
+                lat: offer.location.latitude,
+                lng: offer.location.longitude,
+              },
+              {
+                icon:
+                  offer.id === selectedCardId
+                    ? currentCustomIcon
+                    : defaultCustomIcon,
+              }
+            )
+            .addTo(map);
+        }
       });
     }
+    return () => {
+      if (map) {
+        console.log('размонтировалось');
+        map.remove();
+      }
+    };
   }, [
     map,
     activeCityLocation,
-    offersCurrentCity,
+    offersNearby,
     selectedCardId,
     defaultCustomIcon,
     currentCustomIcon,
   ]);
 
-  return <section className="cities__map map" ref={mapRef}></section>;
+  return (
+    <section
+      className="offer__map map"
+      ref={mapRef}
+      style={{ width: '809px', margin: '0 auto 15px auto', height: '380px' }}
+    ></section>
+  );
 }
 
-export default Map;
+export default OfferMap;
